@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "rootDir": "./src",
+    "outDir": "./.ts-node",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": false,
+    "sourceMap": true,
+    "inlineSources": true,
+    "types": ["node"],
+    "stripInternal": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "importsNotUsedAsValues": "error",
+    "inlineSourceMap": false,
+    "noEmit": false
+  },
+  "ts-node": {
+    "cwd": "/d/project",
+    "projectSearchDir": "/d/project",
+    "require": [],
+    "project": "/d/project/tsconfig.json"
+  }
+}
