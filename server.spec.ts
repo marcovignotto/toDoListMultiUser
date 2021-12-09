@@ -28,4 +28,19 @@ describe("test 404 & welcome api v1", () => {
     expect(res.data.success).toBe(true);
     expect(res.data.msg).toBe("Welcome to the Multi User ToDo List v1.0");
   });
+
+  it("/v1/XZY > Error 404, Page not Found!", async () => {
+    const makeObjToSend = createObj({
+      method: "GET",
+      url: BASEurl + "XYZ",
+      //             data: {},
+      params: "",
+    });
+
+    const res = await getData(makeObjToSend);
+    expect.assertions(3);
+    expect(res.response.status).toBe(404);
+    expect(res.response.data.success).toBe(false);
+    expect(res.response.data.msg).toBe("Page not Found!");
+  });
 });
