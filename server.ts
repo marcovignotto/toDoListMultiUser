@@ -10,17 +10,21 @@ import type {
 // init
 const app: any = express();
 
+// * Routes
+import tasksRoutes from "./routes/tasks";
+
 // * MongoDB
 
-// * PORT
+// * Variables
 const PORT: string | undefined = process.env.PORT;
+const apiCurrentVerion: string = "/v1/";
 
 // * Middleware
 // app.use(express.json({ extended: true }));
 
 // * Routes
 
-app.get("/v1/", (req: Request, res: Response): any => {
+app.get(apiCurrentVerion, (req: Request, res: Response): any => {
   try {
     res.json({
       success: true,
@@ -30,6 +34,8 @@ app.get("/v1/", (req: Request, res: Response): any => {
     console.log(error);
   }
 });
+
+app.use(apiCurrentVerion + "tasks", tasksRoutes);
 
 // * Swagger UI //
 

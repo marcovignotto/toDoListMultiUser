@@ -11,7 +11,7 @@ const BASEurl = "http://localhost:5000/";
  * @desc Test welcome API v1
  */
 
-describe("test 404 & welcome api v1", () => {
+describe.skip("test 404 & welcome api v1", () => {
   it("/v1/ > Welcome to the Multi User ToDo List v1.0", async () => {
     const makeObjToSend = createObj({
       method: "GET",
