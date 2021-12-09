@@ -13,6 +13,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  password: {
+    type: String,
+    require: true,
+  },
+  email: {
+    type: String,
+    require: true,
+    lowercase: true,
+    unique: true,
+  },
   role: {
     default: "user",
     type: String,
@@ -24,7 +34,6 @@ const userSchema = new mongoose.Schema({
   },
   tasks: {
     type: mongoose.Schema.Types.ObjectId,
-    require: true,
     ref: "Task",
   },
 });

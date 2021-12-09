@@ -13,16 +13,17 @@ const app: any = express();
 
 // * Routes
 import tasksRoutes from "./routes/tasks";
+import usersRoutes from "./routes/users";
 
 // * MongoDB
 connectDb();
 
 // * Variables
 const PORT: string | undefined = process.env.PORT;
-const apiCurrentVerion: string = "/v1/";
+const apiCurrentVerion: string = "/api/v1/";
 
 // * Middleware
-// app.use(express.json({ extended: true }));
+app.use(express.json({ type: "*/*" }));
 
 // * Routes
 
@@ -38,6 +39,7 @@ app.get(apiCurrentVerion, (req: Request, res: Response): any => {
 });
 
 app.use(apiCurrentVerion + "tasks", tasksRoutes);
+app.use(apiCurrentVerion + "users", usersRoutes);
 
 // * Swagger UI //
 

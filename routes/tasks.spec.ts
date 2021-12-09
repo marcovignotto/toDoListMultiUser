@@ -9,13 +9,12 @@ import testConfigData from "../__test__/testConfig.json";
 
 const BASEurl = testConfigData.baseUrl;
 
-describe.skip("/v1/tasks/ - GET - POST - PATCH - DELETE", () => {
+describe.skip("/tasks/ - GET - POST - PATCH - DELETE", () => {
   describe("GET - Retrives all the tasks of a specific user", () => {
     test("Basic > true, 200, ok", async () => {
       const makeObjToSend = createObj({
         method: "GET",
-        url: BASEurl + "v1/tasks",
-        //             data: {},
+        url: BASEurl + "tasks",
         params: "",
       });
 

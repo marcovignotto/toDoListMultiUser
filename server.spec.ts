@@ -4,19 +4,19 @@
 
 import createObj from "./__test__/utils/axiosObj";
 import getData from "./__test__/utils/createObj";
+import testConfigData from "./__test__/testConfig.json";
 
-const BASEurl = "http://localhost:5000/";
+const BASEurl = testConfigData.baseUrl;
 
 /**
  * @desc Test welcome API v1
  */
 
 describe.skip("test 404 & welcome api v1", () => {
-  it("/v1/ > Welcome to the Multi User ToDo List v1.0", async () => {
+  it(`${BASEurl}v1/ > Welcome to the Multi User ToDo List v1.0`, async () => {
     const makeObjToSend = createObj({
       method: "GET",
-      url: BASEurl + "v1/",
-      //             data: {},
+      url: BASEurl,
       params: "",
     });
 
@@ -29,11 +29,10 @@ describe.skip("test 404 & welcome api v1", () => {
     expect(res.data.msg).toBe("Welcome to the Multi User ToDo List v1.0");
   });
 
-  it("/v1/XZY > Error 404, Page not Found!", async () => {
+  it(`${BASEurl}v1/XZY > Error 404, Page not Found!`, async () => {
     const makeObjToSend = createObj({
       method: "GET",
       url: BASEurl + "XYZ",
-      //             data: {},
       params: "",
     });
 

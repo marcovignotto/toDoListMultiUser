@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --respawn --transpile-only server.ts",
     "build": "tsc",
     "build: start": "tsc && node -r dotenv/config server.js",
-    "testwatch": "jest --watchAll --testTimeout=5000 --setupFiles dotenv/config"
+    "testwatch": "jest --watchAll --testTimeout=5000 --verbose --setupFiles dotenv/config"
   },
   "keywords": [],
   "author": "",
