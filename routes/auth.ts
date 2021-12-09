@@ -1,21 +1,24 @@
 /**
- * @desc tasks route
+ * @desc auth route to allow user
  */
+
 import { Router } from "express";
 import { Request, Response, NextFunction } from "express";
 
 const router = Router();
 
-// CTRLs
-const { getAllUsersTasks } = require("../controllers/tasks");
-
 /**
  * @desc GET route
  * @path /
  * @private
- * @return all the user's tasks
+ * @return all the user's info
  */
 
-router.get("/", getAllUsersTasks);
+/**
+ * @desc POST route
+ * @path /
+ * @private
+ * @return to get a token
+ */
 
 export default router;
