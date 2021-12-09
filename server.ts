@@ -1,5 +1,6 @@
 require("dotenv").config({ path: __dirname + "/.env" });
 import express from "express";
+import connectDb from "./config/db";
 import type {
   Request,
   Response,
@@ -14,6 +15,7 @@ const app: any = express();
 import tasksRoutes from "./routes/tasks";
 
 // * MongoDB
+connectDb();
 
 // * Variables
 const PORT: string | undefined = process.env.PORT;

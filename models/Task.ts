@@ -13,6 +13,10 @@ const taskSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  priority: {
+    type: String,
+    require: true,
+  },
   // is the userCode used by user
   ownerUserCode: {
     type: String,
