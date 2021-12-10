@@ -7,6 +7,12 @@ import createObj from "../__test__/utils/axiosObj";
 import getData from "../__test__/utils/createObj";
 import testConfigData from "../__test__/testConfig.json";
 
+import {
+  credentialsRight,
+  credentialsWrongEmail,
+  credentialsWrongPass,
+} from "../__test__/utils/credentials";
+
 const BASEurl = testConfigData.baseUrl;
 
 /**
@@ -17,28 +23,6 @@ const BASEurl = testConfigData.baseUrl;
  * 4. POST to get an ERROR with wrong credentials
  * 5. POST to get an ERROR with wrong credentials
  */
-
-/**
- * @desc Params
- */
-
-const userTestEmail = process.env.TEST_USER_EMAIL;
-const userTestPass = process.env.TEST_USER_PASS;
-
-const credentialsRight = {
-  email: userTestEmail,
-  password: userTestPass,
-};
-
-const credentialsWrongPass = {
-  email: userTestEmail,
-  password: userTestPass + "1",
-};
-
-const credentialsWrongEmail = {
-  email: userTestEmail + "1",
-  password: userTestPass,
-};
 
 describe("/auth/ - GET - POST", () => {
   let tokenToSend = "";
@@ -51,7 +35,7 @@ describe("/auth/ - GET - POST", () => {
         data: {
           method: "POST",
           url: BASEurl + "auth",
-          data: credentialsRight,
+          data: credentialsRight(),
         },
       });
 
@@ -71,7 +55,7 @@ describe("/auth/ - GET - POST", () => {
         data: {
           method: "POST",
           url: BASEurl + "auth",
-          data: credentialsWrongPass,
+          data: credentialsWrongPass(),
         },
       });
 
@@ -93,7 +77,7 @@ describe("/auth/ - GET - POST", () => {
         data: {
           method: "POST",
           url: BASEurl + "auth",
-          data: credentialsWrongEmail,
+          data: credentialsWrongEmail(),
         },
       });
 
@@ -109,9 +93,8 @@ describe("/auth/ - GET - POST", () => {
     });
   });
 
-  describe("GET call tests", () => {
-    it("GET user data with a token > success:true", async () => {
-      test.todo("get to test with the auth middleware");
-    });
+  // get to test with the auth middleware
+  describe.skip("GET call tests", () => {
+    it("GET user data with a token > success:true", async () => {});
   });
 });
