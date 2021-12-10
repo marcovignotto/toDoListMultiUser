@@ -28,7 +28,7 @@ describe("/auth/ - GET - POST", () => {
   let access_token = "";
 
   describe("POST call tests", () => {
-    it("1. POST get an ERROR > Wrong credentials password test", async () => {
+    it.skip("1. POST get an ERROR > Wrong credentials password test", async () => {
       const makeObjToSend = createObj({
         method: "POST",
         url: BASEurl + "auth",
@@ -49,7 +49,7 @@ describe("/auth/ - GET - POST", () => {
       // status
       expect(res.response.status).toBe(401);
     });
-    it("2. POST get an ERROR > Wrong credentials password test", async () => {
+    it.skip("2. POST get an ERROR > Wrong credentials password test", async () => {
       const makeObjToSend = createObj({
         method: "POST",
         url: BASEurl + "auth",
@@ -84,7 +84,7 @@ describe("/auth/ - GET - POST", () => {
 
       const res = await getData(makeObjToSend);
 
-      expect.assertions(2);
+      expect.assertions(3);
       // 200
       expect(res.status).toBe(200);
       // success
@@ -98,7 +98,29 @@ describe("/auth/ - GET - POST", () => {
 
   // get to test with the auth middleware
   describe("GET call tests", () => {
-    it("GET user data with a token > success:true", async () => {
+    it("1. GET with out token > msg: No Token, no auth!", async () => {
+      const makeObjToSend = createObj({
+        method: "GET",
+        url: BASEurl + "auth",
+
+        data: {
+          method: "GET",
+          url: BASEurl + "auth",
+        },
+      });
+
+      const res = await getData(makeObjToSend);
+
+      expect.assertions(3);
+      // 409
+      expect(res.response.status).toBe(401);
+      // false
+      expect(res.response.data.success).toBe(false);
+      // msg
+      expect(res.response.data.msg).toBe("No Token, no auth!");
+    });
+
+    it("2. GET user data with a token > success:true", async () => {
       const makeObjToSend = createObj({
         method: "GET",
         url: BASEurl + "auth",
@@ -119,13 +141,13 @@ describe("/auth/ - GET - POST", () => {
 
       const res = await getData(makeObjToSend);
 
-      expect.assertions(1);
+      expect.assertions(3);
       // 200
       expect(res.status).toBe(200);
       // token
       expect(res.data.token).toHaveLength(res.data.token.length);
-      // id
-      expect(res.data.id).toHaveLength(res.data.id.length);
+      // email
+      expect(res.data.email).toBe(credentialsRight().email);
     });
   });
 });

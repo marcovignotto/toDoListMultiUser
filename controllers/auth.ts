@@ -23,17 +23,57 @@ interface RequestBody {
   userCode?: string;
 }
 
+interface IGetUserResponse {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  userCode: string;
+  success: boolean;
+  token: string;
+}
+
 /**
  * @desc GET route
  * @path /
  * @private
  * @return all the user's info
  */
-const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
-  console.log("getUserInfo");
-  console.log("req", req.body);
-  console.log("req", req);
-  console.log("req", req.cookies.access_token);
+const getUserInfo = async (
+  req: Request,
+  res: Response<IGetUserResponse>,
+  next: NextFunction
+) => {
+  try {
+    // the id is returned by the auth middleware
+    const { _id, token } = req.body.data;
+
+    const userData = await User.findOne({
+      _id: _id,
+    })
+      .select("-password -__v")
+      .exec();
+
+    // return and create the properties
+    return res.json({
+      _id: userData._id,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      email: userData.email,
+      role: userData.role,
+      userCode: userData.userCode,
+      success: true,
+      token: token,
+    });
+  } catch (error) {
+    console.log(error);
+    return next({
+      status: 404,
+      success: false,
+      msg: "Error getting user info",
+    });
+  }
 };
 
 /**
@@ -79,7 +119,7 @@ const postToGetToken = async (
 
     // create payload
     const payload = {
-      user: { id: user.id, role: user.role },
+      user: { _id: user._id, role: user.role },
     };
 
     // creates and returns a token

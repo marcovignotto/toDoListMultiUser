@@ -12,17 +12,33 @@ const authorization = async (
   next: NextFunction
 ) => {
   // create payload
-  console.log("req", req.body.config.header.split(" : "));
 
   let tokenToVerify: string = "";
 
-  if (req.body.config.header) {
+  // for testing purposals
+  // get the token from the header
+  if (req.body?.config?.header["Set-Cookie"].length > 0) {
+    tokenToVerify = req.body.config.header["Set-Cookie"];
   }
 
-  const token = await req.cookies.access_token;
+  if (tokenToVerify === "") {
+    return next({
+      success: false,
+      msg: "No Token, no auth!",
+      status: 401,
+    });
+  }
 
-  // ! disabled
-  //   return next();
+  // verify token
+  const decodedTokenInfo = jwt.verify(tokenToVerify, process.env.JWT_SECRET);
+
+  // insert decoded user and token into req
+  req.body.data = {
+    _id: decodedTokenInfo.user._id,
+    token: tokenToVerify,
+  };
+
+  next();
 };
 
 export default authorization;
