@@ -36,6 +36,7 @@ const createObj = (objCall: AxiosRequestConfig<IObject>) => {
     headers: {
       "Content-Type": "application/json",
     },
+    withCredentials: true,
   };
 };
 

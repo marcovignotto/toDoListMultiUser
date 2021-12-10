@@ -1,6 +1,9 @@
 require("dotenv").config({ path: __dirname + "/.env" });
 import express from "express";
 import connectDb from "./config/db";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import morgan from "morgan";
 import type {
   Request,
   Response,
@@ -9,7 +12,7 @@ import type {
 } from "express";
 
 // init
-const app: any = express();
+const app = express();
 
 // * Routes
 import tasksRoutes from "./routes/tasks";
@@ -24,7 +27,21 @@ const PORT: string | undefined = process.env.PORT;
 const apiCurrentVerion: string = "/api/v1/";
 
 // * Middleware
-app.use(express.json({ type: "*/*" }));
+
+const corsOptions = {
+  // origin: ["*"], //included origin as true
+  credentials: true, //included credentials as true
+};
+
+app.use(cors(corsOptions));
+app.use(cookieParser());
+app.use(morgan());
+app.use(
+  express
+    .json
+    // { type: "*/*" }
+    ()
+);
 
 // * Routes
 

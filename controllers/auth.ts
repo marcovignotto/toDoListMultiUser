@@ -13,7 +13,7 @@ const User = require("../models/User");
 // * Interfaces
 interface IToken {
   userCode?: string;
-  token: string;
+  token?: string;
   success: boolean;
 }
 
@@ -29,11 +29,12 @@ interface RequestBody {
  * @private
  * @return all the user's info
  */
-exports.getUserInfo = async (
-  req: Request<RequestBody>,
-  res: Response,
-  next: NextFunction
-) => {};
+const getUserInfo = async (req: Request, res: Response, next: NextFunction) => {
+  console.log("getUserInfo");
+  console.log("req", req.body);
+  console.log("req", req);
+  console.log("req", req.cookies.access_token);
+};
 
 /**
  * @desc POST route
@@ -42,7 +43,7 @@ exports.getUserInfo = async (
  * @return to get a token
  */
 
-exports.postToGetToken = async (
+const postToGetToken = async (
   req: Request<RequestBody>,
   res: Response<IToken>,
   next: NextFunction
@@ -78,7 +79,7 @@ exports.postToGetToken = async (
 
     // create payload
     const payload = {
-      user: { id: user.id },
+      user: { id: user.id, role: user.role },
     };
 
     // creates and returns a token
@@ -86,7 +87,7 @@ exports.postToGetToken = async (
       payload,
       process.env.JWT_SECRET,
       // for development: expires in 30days
-      {},
+      { expiresIn: "30d" },
       (err, token) => {
         if (err) {
           return next({
@@ -96,7 +97,17 @@ exports.postToGetToken = async (
           });
         }
 
-        return res.json({ success: true, token: token });
+        // res.setHeader("Set-Cookie", "visited=true; Max-Age=3000; HttpOnly, Secure");
+
+        return (
+          res
+            //           .cookie("access_token", token, {
+            //             httpOnly: true,
+            //             //             secure: process.env.NODE_ENV === "production",
+            //             secure: false,
+            //           })
+            .json({ success: true, token: token })
+        );
       }
     );
   } catch (error) {
@@ -108,3 +119,5 @@ exports.postToGetToken = async (
     });
   }
 };
+
+export { postToGetToken, getUserInfo };

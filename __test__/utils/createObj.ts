@@ -35,12 +35,13 @@ interface IDataError<T = any, D = any> {
 export interface IObject {
   method: Method;
   url: string;
-  // config?: object;
+  config?: object;
   data?: object;
   params?: object;
   headers?: AxiosRequestHeaders;
+  withCredentials?: boolean;
 }
-
+axios.defaults.withCredentials = true;
 const getData: Function = async (
   objCall: AxiosRequestConfig<IObject>
 ): Promise<AxiosResponse<IDataSuccess> | AxiosError<IDataError>> => {

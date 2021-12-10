@@ -17,36 +17,37 @@ const BASEurl = testConfigData.baseUrl;
 
 /**
  * @desc test POST + GET Success / GET Error / POST Error
- * 1. POST to get the token
+ * 3. POST to get the token
  * 2. GET to get user data with the token
- * 3. GET to get an ERROR with wrong token
+ * 1. GET to get an ERROR with wrong token
  * 4. POST to get an ERROR with wrong credentials
  * 5. POST to get an ERROR with wrong credentials
  */
 
 describe("/auth/ - GET - POST", () => {
-  let tokenToSend = "";
+  let access_token = "";
 
   describe("POST call tests", () => {
-    it("1. POST get a token > success: true", async () => {
+    it("1. POST get an ERROR > Wrong credentials password test", async () => {
       const makeObjToSend = createObj({
         method: "POST",
         url: BASEurl + "auth",
         data: {
           method: "POST",
           url: BASEurl + "auth",
-          data: credentialsRight(),
+          data: credentialsWrongEmail(),
         },
       });
 
       const res = await getData(makeObjToSend);
 
-      expect.assertions(2);
-      // token
-      expect(res.data.token).toHaveLength(res.data.token.length);
-      // success
-      expect(res.data.success).toBe(true);
-      tokenToSend = res.data.token;
+      expect.assertions(3);
+      // false
+      expect(res.response.data.success).toBe(false);
+      // msg
+      expect(res.response.data.msg).toBe("Unauthorized");
+      // status
+      expect(res.response.status).toBe(401);
     });
     it("2. POST get an ERROR > Wrong credentials password test", async () => {
       const makeObjToSend = createObj({
@@ -70,31 +71,61 @@ describe("/auth/ - GET - POST", () => {
       expect(res.response.status).toBe(401);
     });
 
-    it("3. POST get an ERROR > Wrong credentials password test", async () => {
+    it("3. POST get a token > success: true", async () => {
       const makeObjToSend = createObj({
         method: "POST",
         url: BASEurl + "auth",
         data: {
           method: "POST",
           url: BASEurl + "auth",
-          data: credentialsWrongEmail(),
+          data: credentialsRight(),
         },
       });
 
       const res = await getData(makeObjToSend);
 
-      expect.assertions(3);
-      // false
-      expect(res.response.data.success).toBe(false);
-      // msg
-      expect(res.response.data.msg).toBe("Unauthorized");
-      // status
-      expect(res.response.status).toBe(401);
+      expect.assertions(2);
+      // 200
+      expect(res.status).toBe(200);
+      // success
+      expect(res.data.success).toBe(true);
+      // token
+      expect(res.data.token).toHaveLength(res.data.token.length);
+
+      access_token = res.data.token;
     });
   });
 
   // get to test with the auth middleware
-  describe.skip("GET call tests", () => {
-    it("GET user data with a token > success:true", async () => {});
+  describe("GET call tests", () => {
+    it("GET user data with a token > success:true", async () => {
+      const makeObjToSend = createObj({
+        method: "GET",
+        url: BASEurl + "auth",
+        withCredentials: true,
+        data: {
+          config: {
+            withCredentials: true,
+            header: {
+              "Set-Cookie": access_token,
+            },
+          },
+          method: "GET",
+          url: BASEurl + "auth",
+          data: credentialsRight(),
+          withCredentials: true,
+        },
+      });
+
+      const res = await getData(makeObjToSend);
+
+      expect.assertions(1);
+      // 200
+      expect(res.status).toBe(200);
+      // token
+      expect(res.data.token).toHaveLength(res.data.token.length);
+      // id
+      expect(res.data.id).toHaveLength(res.data.id.length);
+    });
   });
 });

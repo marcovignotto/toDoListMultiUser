@@ -3,10 +3,10 @@
  */
 
 import { Router } from "express";
-import { Request, Response, NextFunction } from "express";
 
 // CTRLs
-const { getUserInfo, postToGetToken } = require("../controllers/auth");
+import { getUserInfo, postToGetToken } from "../controllers/auth";
+import authorization from "../middleware/authorization";
 
 const router = Router();
 
@@ -17,7 +17,7 @@ const router = Router();
  * @return all the user's info
  */
 
-router.get("/", getUserInfo);
+router.get("/", authorization, getUserInfo);
 
 /**
  * @desc POST route
