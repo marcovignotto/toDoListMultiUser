@@ -5,6 +5,9 @@
 import { Router } from "express";
 import { Request, Response, NextFunction } from "express";
 
+// CTRLs
+const { getUserInfo, postToGetToken } = require("../controllers/auth");
+
 const router = Router();
 
 /**
@@ -14,11 +17,15 @@ const router = Router();
  * @return all the user's info
  */
 
+router.get("/", getUserInfo);
+
 /**
  * @desc POST route
  * @path /
  * @private
  * @return to get a token
  */
+
+router.post("/", postToGetToken);
 
 export default router;

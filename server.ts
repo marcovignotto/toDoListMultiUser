@@ -14,6 +14,7 @@ const app: any = express();
 // * Routes
 import tasksRoutes from "./routes/tasks";
 import usersRoutes from "./routes/users";
+import authRoutes from "./routes/auth";
 
 // * MongoDB
 connectDb();
@@ -40,6 +41,7 @@ app.get(apiCurrentVerion, (req: Request, res: Response): any => {
 
 app.use(apiCurrentVerion + "tasks", tasksRoutes);
 app.use(apiCurrentVerion + "users", usersRoutes);
+app.use(apiCurrentVerion + "auth", authRoutes);
 
 // * Swagger UI //
 

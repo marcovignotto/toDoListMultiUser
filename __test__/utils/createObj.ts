@@ -37,7 +37,7 @@ export interface IObject {
   url: string;
   // config?: object;
   data?: object;
-  params?: string;
+  params?: object;
   headers?: AxiosRequestHeaders;
 }
 

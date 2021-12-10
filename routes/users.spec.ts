@@ -34,7 +34,7 @@ const userToPatch = {
  * 3. PATCH the same changin some infos
  */
 
-describe("/users/ - POST - PATCH", () => {
+describe.skip("/users/ - POST - PATCH", () => {
   let idToPatch = "";
 
   const makeObjToSend = createObj({

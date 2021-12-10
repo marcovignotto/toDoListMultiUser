@@ -2,10 +2,7 @@
  * @desc CTRL for tasks
  */
 
-import { Router } from "express";
 import { Request, Response, NextFunction } from "express";
-
-const router = Router();
 
 // * Models
 
