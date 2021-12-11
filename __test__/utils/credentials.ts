@@ -5,6 +5,7 @@ require("dotenv").config({ path: __dirname + "/.env" });
 
 const userTestEmail = process.env.TEST_USER_EMAIL;
 const userTestPass = process.env.TEST_USER_PASS;
+const userTestToken = process.env.TEST_TOKEN;
 
 const credentialsRight: Function = (): object => {
   return {
@@ -27,4 +28,13 @@ const credentialsWrongEmail: Function = (): object => {
   };
 };
 
-export { credentialsRight, credentialsWrongEmail, credentialsWrongPass };
+const testToken: Function = (): string | undefined => {
+  return userTestToken;
+};
+
+export {
+  credentialsRight,
+  credentialsWrongEmail,
+  credentialsWrongPass,
+  testToken,
+};

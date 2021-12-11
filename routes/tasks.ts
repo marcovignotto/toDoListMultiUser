@@ -8,6 +8,9 @@ const router = Router();
 // CTRLs
 const { getAllUsersTasks } = require("../controllers/tasks");
 
+// Middleware
+import authorization from "../middleware/authorization";
+
 /**
  * @desc GET route
  * @path /
@@ -15,6 +18,6 @@ const { getAllUsersTasks } = require("../controllers/tasks");
  * @return all the user's tasks
  */
 
-router.get("/", getAllUsersTasks);
+router.get("/", authorization, getAllUsersTasks);
 
 export default router;

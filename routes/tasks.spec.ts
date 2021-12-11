@@ -7,40 +7,97 @@ import createObj from "../__test__/utils/axiosObj";
 import getData from "../__test__/utils/createObj";
 import testConfigData from "../__test__/testConfig.json";
 
+import {
+  credentialsRight,
+  credentialsWrongEmail,
+  credentialsWrongPass,
+  testToken,
+} from "../__test__/utils/credentials";
+
 const BASEurl = testConfigData.baseUrl;
 
-describe.skip("/tasks/ - GET - POST - PATCH - DELETE", () => {
+/**
+ * @desc test GET
+ * 1. Error without token
+ * 2. Error wrong token
+ * 3. Basic
+ */
+
+describe("/tasks/ - GET - POST - PATCH - DELETE", () => {
   describe("GET - Retrives all the tasks of a specific user", () => {
-    test("Basic > true, 200, ok", async () => {
+    test("1. Error without token > false, 401 Bad Request", async () => {
       const makeObjToSend = createObj({
         method: "GET",
         url: BASEurl + "tasks",
-        params: "",
+        withCredentials: true,
+        data: {
+          config: {
+            withCredentials: true,
+            header: {},
+          },
+        },
       });
 
       const res = await getData(makeObjToSend);
 
       expect.assertions(3);
-
-      expect(res.status).toBe(200);
-      expect(res.statusText).toBe("OK");
-      expect(res.data.success).toBe(true);
+      // code
+      expect(res.response.status).toBe(401);
+      // success
+      expect(res.response.data.success).toBe(false);
+      // msg
+      expect(res.response.data.msg).toBe("No Token, no auth!");
     });
 
-    test.skip("Error wrong user request > false, 400 Bad Request", async () => {
+    test("2. Error wrong token > false, 401 Bad Request", async () => {
       const makeObjToSend = createObj({
         method: "GET",
-        url: BASEurl + "v1/tasks",
-        data: { method: "GET", url: BASEurl + "v1/tasks" },
-        params: { user: "wrongUser", password: "wrongPassword" }, // test user
+        url: BASEurl + "tasks",
+        withCredentials: true,
+        data: {
+          config: {
+            withCredentials: true,
+            header: {
+              "Set-Cookie": testToken() + "XYZ",
+            },
+          },
+        },
       });
 
       const res = await getData(makeObjToSend);
-      console.log("res", res);
-      //       expect.assertions(2);
+      expect.assertions(3);
+      // code
+      expect(res.response.status).toBe(401);
+      // success
+      expect(res.response.data.success).toBe(false);
+      // msg
+      expect(res.response.data.msg).toBe("Authorization error!");
+    });
 
-      //       expect(res.status).toBe(400);
-      //       expect(res.data.success).toBe(false);
+    test("3. Basic > true, 200, ok", async () => {
+      const makeObjToSend = createObj({
+        method: "GET",
+        url: BASEurl + "tasks",
+        withCredentials: true,
+        data: {
+          config: {
+            withCredentials: true,
+            header: {
+              "Set-Cookie": testToken(),
+            },
+          },
+        },
+      });
+
+      const res = await getData(makeObjToSend);
+
+      expect.assertions(3);
+      // status
+      expect(res.status).toBe(200);
+      // text
+      expect(res.statusText).toBe("OK");
+      // success
+      expect(res.data.success).toBe(true);
     });
   });
 });

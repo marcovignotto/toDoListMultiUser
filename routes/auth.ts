@@ -6,6 +6,8 @@ import { Router } from "express";
 
 // CTRLs
 import { getUserInfo, postToGetToken } from "../controllers/auth";
+
+// Middleware
 import authorization from "../middleware/authorization";
 
 const router = Router();

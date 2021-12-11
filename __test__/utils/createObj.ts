@@ -33,8 +33,8 @@ interface IDataError<T = any, D = any> {
 }
 
 export interface IObject {
-  method: Method;
-  url: string;
+  method?: Method;
+  url?: string;
   config?: object;
   data?: object;
   params?: object;

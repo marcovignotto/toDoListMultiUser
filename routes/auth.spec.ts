@@ -24,11 +24,11 @@ const BASEurl = testConfigData.baseUrl;
  * 5. POST to get an ERROR with wrong credentials
  */
 
-describe("/auth/ - GET - POST", () => {
+describe.skip("/auth/ - GET - POST", () => {
   let access_token = "";
 
   describe("POST call tests", () => {
-    it.skip("1. POST get an ERROR > Wrong credentials password test", async () => {
+    it("1. POST get an ERROR > Wrong credentials password test", async () => {
       const makeObjToSend = createObj({
         method: "POST",
         url: BASEurl + "auth",
@@ -49,7 +49,7 @@ describe("/auth/ - GET - POST", () => {
       // status
       expect(res.response.status).toBe(401);
     });
-    it.skip("2. POST get an ERROR > Wrong credentials password test", async () => {
+    it("2. POST get an ERROR > Wrong credentials password test", async () => {
       const makeObjToSend = createObj({
         method: "POST",
         url: BASEurl + "auth",
@@ -91,7 +91,6 @@ describe("/auth/ - GET - POST", () => {
       expect(res.data.success).toBe(true);
       // token
       expect(res.data.token).toHaveLength(res.data.token.length);
-
       access_token = res.data.token;
     });
   });
@@ -132,10 +131,6 @@ describe("/auth/ - GET - POST", () => {
               "Set-Cookie": access_token,
             },
           },
-          method: "GET",
-          url: BASEurl + "auth",
-          data: credentialsRight(),
-          withCredentials: true,
         },
       });
 

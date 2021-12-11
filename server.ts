@@ -35,7 +35,12 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(morgan());
+app.use(
+  morgan(
+    "dev",
+    ":method :url :status :res[content-length] - :response-time ms - [:date[clf]]"
+  )
+);
 app.use(
   express
     .json

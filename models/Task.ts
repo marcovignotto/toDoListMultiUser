@@ -23,7 +23,7 @@ const taskSchema = new mongoose.Schema({
     require: true,
   },
   done: {
-    type: String,
+    type: Boolean,
     require: true,
   },
 });
