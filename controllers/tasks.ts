@@ -15,7 +15,7 @@ interface IRequestBody {
 
 interface IGetAllTasksResponse {
   success: boolean;
-  data: Array<object>;
+  tasks: Array<object>;
 }
 
 /**
@@ -40,7 +40,7 @@ exports.getAllUsersTasks = async (
       .select("tasks")
       .exec();
 
-    res.status(200).json({ success: true, data: userData });
+    res.status(200).json({ success: true, tasks: userData });
   } catch (error) {
     console.log(error);
     return next({

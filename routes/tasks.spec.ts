@@ -7,6 +7,9 @@ import createObj from "../__test__/utils/axiosObj";
 import getData from "../__test__/utils/createObj";
 import testConfigData from "../__test__/testConfig.json";
 
+import axios from "axios";
+import MockAdapter from "axios-mock-adapter";
+
 import {
   credentialsRight,
   credentialsWrongEmail,
@@ -14,7 +17,8 @@ import {
   testToken,
 } from "../__test__/utils/credentials";
 
-const BASEurl = testConfigData.baseUrl;
+// define the route
+const BASEurl = testConfigData.baseUrl + "tasks";
 
 /**
  * @desc test GET
@@ -28,7 +32,7 @@ describe("/tasks/ - GET - POST - PATCH - DELETE", () => {
     test("1. Error without token > false, 401 Bad Request", async () => {
       const makeObjToSend = createObj({
         method: "GET",
-        url: BASEurl + "tasks",
+        url: BASEurl,
         withCredentials: true,
         data: {
           config: {
@@ -52,7 +56,7 @@ describe("/tasks/ - GET - POST - PATCH - DELETE", () => {
     test("2. Error wrong token > false, 401 Bad Request", async () => {
       const makeObjToSend = createObj({
         method: "GET",
-        url: BASEurl + "tasks",
+        url: BASEurl,
         withCredentials: true,
         data: {
           config: {
@@ -77,7 +81,7 @@ describe("/tasks/ - GET - POST - PATCH - DELETE", () => {
     test("3. Basic > true, 200, ok", async () => {
       const makeObjToSend = createObj({
         method: "GET",
-        url: BASEurl + "tasks",
+        url: BASEurl,
         withCredentials: true,
         data: {
           config: {
@@ -98,6 +102,35 @@ describe("/tasks/ - GET - POST - PATCH - DELETE", () => {
       expect(res.statusText).toBe("OK");
       // success
       expect(res.data.success).toBe(true);
+    });
+
+    test("4. Mocked array returned > true, 200, length 3", async () => {
+      // mock
+      var mock = new MockAdapter(axios);
+      // array 3 items
+      const data = {
+        success: true,
+        tasks: [{ task: "one" }, { task: "two" }, { task: "three" }],
+      };
+
+      mock.onGet(BASEurl).reply(200, data);
+
+      //
+      const makeObjToSend = createObj({
+        method: "GET",
+        url: BASEurl,
+        withCredentials: true,
+      });
+
+      const res = await getData(makeObjToSend);
+
+      expect.assertions(3);
+      // status
+      expect(res.status).toBe(200);
+      // success
+      expect(res.data.success).toBe(true);
+      // data returned
+      expect(res.data.tasks).toHaveLength(3);
     });
   });
 });
