@@ -5,7 +5,7 @@
 import { Router } from "express";
 
 // CTRLs
-import { getUserInfo, postToGetToken } from "../controllers/auth";
+import { getUserData, postToGetToken } from "../controllers/auth";
 
 // Middleware
 import authorization from "../middleware/authorization";
@@ -19,7 +19,7 @@ const router = Router();
  * @return all the user's info
  */
 
-router.get("/", authorization, getUserInfo);
+router.get("/", authorization, getUserData);
 
 /**
  * @desc POST route

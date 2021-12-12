@@ -40,14 +40,14 @@ interface IGetUserResponse {
  * @private
  * @return all the user's info
  */
-const getUserInfo = async (
+const getUserData = async (
   req: Request,
   res: Response<IGetUserResponse>,
   next: NextFunction
 ) => {
   try {
     // the id is returned by the auth middleware
-    const { _id, token } = req.body.data;
+    const { _id, token } = req.body.user;
 
     const userData = await User.findOne({
       _id: _id,
@@ -158,4 +158,4 @@ const postToGetToken = async (
   }
 };
 
-export { postToGetToken, getUserInfo };
+export { postToGetToken, getUserData };

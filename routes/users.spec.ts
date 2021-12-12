@@ -50,7 +50,7 @@ const userToPatch = {
  * 3. PATCH the same changin some infos
  */
 
-describe.skip("/users/ - POST - PATCH", () => {
+describe("/users/ - POST - PATCH", () => {
   let idToPatch = "";
 
   const makeObjToSend = createObj({
@@ -78,7 +78,7 @@ describe.skip("/users/ - POST - PATCH", () => {
     expect(res.data.email).toBe(userToCreate.email);
   });
 
-  it.skip("2. POST - the same user registration > email error msg", async () => {
+  it("2. POST - the same user registration > email error msg", async () => {
     const res = await getData(makeObjToSend);
 
     expect.assertions(3);
@@ -88,7 +88,7 @@ describe.skip("/users/ - POST - PATCH", () => {
     expect(res.response.data.msg).toBe("Email already exists!");
   });
 
-  it.skip("3. PUT - a user >  {success:true}", async () => {
+  it("3. PUT - a user >  {success:true}", async () => {
     const makeObjToSend = createObj({
       method: "PUT",
       url: BASEurl + "users",

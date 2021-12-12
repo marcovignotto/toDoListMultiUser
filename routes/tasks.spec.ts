@@ -47,7 +47,7 @@ describe("/tasks/ - GET - POST - PUT - DELETE", () => {
    * 4. Mocked returned Array
    */
 
-  describe.skip("GET - Retrives all the tasks of a specific user", () => {
+  describe("GET - Retrives all the tasks of a specific user", () => {
     test("1. Error without token > false, 401 Bad Request", async () => {
       const makeObjToSend = createObj({
         method: "GET",

@@ -24,7 +24,7 @@ const BASEurl = testConfigData.baseUrl;
  * 5. POST to get an ERROR with wrong credentials
  */
 
-describe.skip("/auth/ - GET - POST", () => {
+describe("/auth/ - GET - POST", () => {
   let access_token = "";
 
   describe("POST call tests", () => {
@@ -96,7 +96,7 @@ describe.skip("/auth/ - GET - POST", () => {
   });
 
   // get to test with the auth middleware
-  describe.skip("GET call tests", () => {
+  describe("GET call tests", () => {
     it("1. GET with out token > msg: No Token, no auth!", async () => {
       const makeObjToSend = createObj({
         method: "GET",
