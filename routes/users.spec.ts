@@ -7,6 +7,13 @@ import createObj from "../__test__/utils/axiosObj";
 import getData from "../__test__/utils/createObj";
 import testConfigData from "../__test__/testConfig.json";
 
+import {
+  credentialsRight,
+  credentialsWrongEmail,
+  credentialsWrongPass,
+  testToken,
+} from "../__test__/utils/credentials";
+
 const BASEurl = testConfigData.baseUrl;
 
 const userNameEmailGen = Math.floor(Math.random() * 999999);
@@ -16,6 +23,15 @@ const userToCreate = {
   lastName: "LAST_" + userNameEmailGen.toString().substring(0, 4),
   email: `${userNameEmailGen}@email.com`,
   password: "12345678",
+  role: "user",
+};
+
+// create a test user to reuse in other tests
+const userTestCreate = {
+  firstName: "John",
+  lastName: "Doe",
+  email: credentialsRight().email,
+  password: credentialsRight().password,
   role: "user",
 };
 
@@ -62,7 +78,7 @@ describe.skip("/users/ - POST - PATCH", () => {
     expect(res.data.email).toBe(userToCreate.email);
   });
 
-  it("2. POST - the same user registration > email error msg", async () => {
+  it.skip("2. POST - the same user registration > email error msg", async () => {
     const res = await getData(makeObjToSend);
 
     expect.assertions(3);
@@ -72,7 +88,7 @@ describe.skip("/users/ - POST - PATCH", () => {
     expect(res.response.data.msg).toBe("Email already exists!");
   });
 
-  it("3. PUT - a user >  {success:true}", async () => {
+  it.skip("3. PUT - a user >  {success:true}", async () => {
     const makeObjToSend = createObj({
       method: "PUT",
       url: BASEurl + "users",

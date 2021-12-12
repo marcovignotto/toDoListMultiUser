@@ -32,10 +32,19 @@ const userSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  tasks: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Task",
-  },
+  tasks: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Task",
+    },
+  ],
+});
+
+userSchema.virtual("allTasks", {
+  ref: "Task",
+  localField: "tasks",
+  foreignField: "_id",
+  justOne: false,
 });
 
 module.exports = mongoose.model("User", userSchema);

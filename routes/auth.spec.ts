@@ -96,7 +96,7 @@ describe.skip("/auth/ - GET - POST", () => {
   });
 
   // get to test with the auth middleware
-  describe("GET call tests", () => {
+  describe.skip("GET call tests", () => {
     it("1. GET with out token > msg: No Token, no auth!", async () => {
       const makeObjToSend = createObj({
         method: "GET",

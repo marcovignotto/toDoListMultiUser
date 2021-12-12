@@ -7,7 +7,7 @@ const connectDb: Function = async (): Promise<void> => {
   try {
     await mongoose.connect(db);
     // ! just for unit testing
-    // await mongoose.connection.db.dropCollection("events");
+    // await mongoose.connection.db.dropCollection("tasks");
 
     console.log(`MongoDB connected...`);
   } catch (error) {

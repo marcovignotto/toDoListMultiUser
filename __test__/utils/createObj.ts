@@ -37,6 +37,7 @@ export interface IObject {
   url?: string;
   config?: object;
   data?: object;
+  task?: object;
   params?: object;
   headers?: AxiosRequestHeaders;
   withCredentials?: boolean;

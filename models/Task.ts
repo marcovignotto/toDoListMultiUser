@@ -11,7 +11,6 @@ const taskSchema = new mongoose.Schema({
   },
   details: {
     type: String,
-    require: true,
   },
   priority: {
     type: String,
@@ -25,6 +24,7 @@ const taskSchema = new mongoose.Schema({
   done: {
     type: Boolean,
     require: true,
+    default: false,
   },
 });
 

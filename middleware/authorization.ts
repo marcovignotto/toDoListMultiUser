@@ -47,9 +47,12 @@ const authorization = async (
 
     // verify token
     const decodedTokenInfo = jwt.verify(tokenToVerify, process.env.JWT_SECRET);
+
     // insert decoded user and token into req
-    req.body.data = {
+    req.body.user = {
       _id: decodedTokenInfo.user._id,
+      userCode: decodedTokenInfo.user.userCode,
+      role: decodedTokenInfo.user.role,
       token: tokenToVerify,
     };
 

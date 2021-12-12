@@ -119,7 +119,7 @@ const postToGetToken = async (
 
     // create payload
     const payload = {
-      user: { _id: user._id, role: user.role },
+      user: { _id: user._id, role: user.role, userCode: user.userCode },
     };
 
     // creates and returns a token
@@ -127,7 +127,7 @@ const postToGetToken = async (
       payload,
       process.env.JWT_SECRET,
       // for development: expires in 30days
-      { expiresIn: "30d" },
+      // { expiresIn: "30d" },
       (err, token) => {
         if (err) {
           return next({
@@ -136,9 +136,7 @@ const postToGetToken = async (
             msg: "Something went wrong with the token!",
           });
         }
-
         // res.setHeader("Set-Cookie", "visited=true; Max-Age=3000; HttpOnly, Secure");
-
         return (
           res
             //           .cookie("access_token", token, {
